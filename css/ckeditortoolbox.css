@@ -1,0 +1,45 @@
+.ckeditor-toolbox-cards {
+  list-style: none;
+  margin: 0;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.ckeditor-toolbox-cards__card {
+  background: #f5f5f5;
+  border-right: 5px solid #97a0a5;
+  border-top: 1px solid #ddd;
+  cursor: move;
+  font-size: .9rem;
+  padding: .5rem 1rem;
+}
+
+.ckeditor-toolbox-cards__card.odd {
+  background: #e4e4e4;
+}
+
+.ckeditor-toolbox-cards__card:hover {
+  background: #fffde3;
+  border-left: 5px solid #ccc;
+  border-right: 0;
+}
+
+.ckeditor-toolbox-header {
+  margin-left: .75rem;
+}
+
+.ckeditor-toolbox-search {
+  margin: .25rem 1rem;
+  padding: .25rem;
+}
+
+.cke_contents.ckeditor-toolbox-processed {
+  display: table-cell;
+  width: 100%;
+}
+
+.ckeditor-toolbox {
+  background: #fefefe;
+  display: table-cell;
+  vertical-align: top;
+}

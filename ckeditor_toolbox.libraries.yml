@@ -1,0 +1,11 @@
+toolbox:
+  version: 1.x
+  css:
+    component:
+      css/ckeditortoolbox.css: {}
+  js:
+    js/ckeditortoolbox.js: {}
+    js/views/ToolboxView.js: {}
+  dependencies:
+    - core/backbone
+    - core/jquery
