@@ -5,6 +5,8 @@ toolbox:
       css/ckeditortoolbox.css: {}
   js:
     js/ckeditortoolbox.js: {}
+    js/include/DropTargetFinder.js: {}
+    js/include/DropTargetTracker.js: {}
     js/views/ToolboxView.js: {}
   dependencies:
     - core/backbone

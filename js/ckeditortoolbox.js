@@ -7,14 +7,21 @@
 (function ($, window, Drupal, drupalSettings) {
 
   Drupal.theme.ckeditorToolbox = function() {
-    return '<h4 class="ckeditor-toolbox-header">Pattern Library</h4>'
-      +      '<input type="text" value="search..." class="ckeditor-toolbox-search">'
+    return ''
+      +      '<input type="text" placeholder="search..." value="" class="ckeditor-toolbox-search">'
+      +      '<h4 class="ckeditor-toolbox-header">Components</h4>'
       +      '<ul class="ckeditor-toolbox-cards">'
       +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Image</li>'
       +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Slideshow</li>'
       +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Accordion</li>'
       +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Hero Image</li>'
       +      '</ul>'
+      +      '<h4 class="ckeditor-toolbox-header">Layout</h4>'
+      +      '<ul class="ckeditor-toolbox-cards">'
+      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Grid</li>'
+      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Row</li>'
+      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Column</li>'
+      +      '</ul>';
   }
 
   /**

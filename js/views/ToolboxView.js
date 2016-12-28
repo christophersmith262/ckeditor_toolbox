@@ -8,6 +8,7 @@
   'use strict';
 
   Drupal.ckeditor_toolbox.ToolboxView = Backbone.View.extend({
+
     initialize: function(options) {
       this.render();
     },
