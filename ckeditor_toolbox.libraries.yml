@@ -5,9 +5,20 @@ toolbox:
       css/ckeditortoolbox.css: {}
   js:
     js/ckeditortoolbox.js: {}
+    js/include/DragHandler.js: {}
     js/include/DropTargetFinder.js: {}
     js/include/DropTargetTracker.js: {}
+    js/include/Toolbox.js: {}
+    js/include/ToolboxManager.js: {}
+    js/include/ViewFactory.js: {}
+    js/models/ToolboxGroupModel.js: {}
+    js/models/ToolboxItemModel.js: {}
+    js/views/ToolboxCardGroupView.js: {}
+    js/views/ToolboxCardView.js: {}
     js/views/ToolboxView.js: {}
+    js/views/ViewDefinitions.js: {}
+    js/collections/ToolboxGroupCollection.js: {}
+    js/collections/ToolboxItemCollection.js: {}
   dependencies:
     - core/backbone
     - core/jquery

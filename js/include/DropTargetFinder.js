@@ -7,9 +7,12 @@
 (function ($, Drupal, CKEDITOR) {
 
   Drupal.ckeditor_toolbox.DropTargetFinder = function(editor) {
+    this._draggedModel = null;
+
     $.extend(this, new CKEDITOR.plugins.lineutils.finder(editor, {
       lookups: {
         'default': function(el) {
+
           if (el.is(CKEDITOR.dtd.$listItem)) {
             return;
           }
@@ -27,5 +30,16 @@
       },
     }));
   }
+
+  $.extend(Drupal.ckeditor_toolbox.DropTargetFinder.prototype, {
+
+    setDraggedModel: function(toolboxItemModel) {
+      this._draggedModel = toolboxItemModel;
+    },
+
+    getDraggedModel: function(toolboxItemModel) {
+      return this._draggedModel;
+    }
+  });
 
 })(jQuery, Drupal, CKEDITOR);

@@ -31,6 +31,11 @@
       this._liner.hideVisible();
     },
 
+    reset: function() {
+      this._targetCandidates = [];
+      this.stopTracking();
+    },
+
     updateTarget: function(y) {
       var resolver = this;
       var relations = this._finder.greedySearch();
@@ -48,12 +53,17 @@
     },
 
     _renderInsertMarker: function(relations) {
-      var locations = this._locator.locate(relations);
-      var bestCandidate = this._getBestCandidate();
-      if (bestCandidate) {
-        this._liner.prepare(relations, locations);
-        this._liner.placeLine(bestCandidate);
-        this._liner.cleanup();
+      try {
+        var locations = this._locator.locate(relations);
+        var bestCandidate = this._getBestCandidate();
+        if (bestCandidate) {
+          this._liner.prepare(relations, locations);
+          this._liner.placeLine(bestCandidate);
+          this._liner.cleanup();
+        }
+      }
+      catch (e) {
+        this._targetCandidates = [];
       }
     },
 

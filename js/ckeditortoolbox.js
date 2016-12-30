@@ -4,24 +4,28 @@
  * Provides Drupal API integrations for paragraphs_editor.
  */
 
-(function ($, window, Drupal, drupalSettings) {
+(function ($, Drupal) {
+
+  Drupal.behaviors.ckeditor_toolbox = {
+    attach: function(context) {
+      if (!Drupal.ckeditor_toolbox.manager) {
+        Drupal.ckeditor_toolbox.manager = new Drupal.ckeditor_toolbox.ToolboxManager(Drupal.ckeditor_toolbox);
+      }
+    }
+  };
 
   Drupal.theme.ckeditorToolbox = function() {
-    return ''
-      +      '<input type="text" placeholder="search..." value="" class="ckeditor-toolbox-search">'
-      +      '<h4 class="ckeditor-toolbox-header">Components</h4>'
-      +      '<ul class="ckeditor-toolbox-cards">'
-      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Image</li>'
-      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Slideshow</li>'
-      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Accordion</li>'
-      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Hero Image</li>'
-      +      '</ul>'
-      +      '<h4 class="ckeditor-toolbox-header">Layout</h4>'
-      +      '<ul class="ckeditor-toolbox-cards">'
-      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Grid</li>'
-      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Row</li>'
-      +        '<li class="ckeditor-toolbox-cards__card" draggable="true">Column</li>'
-      +      '</ul>';
+    return '<input type="text" placeholder="search..." value="" class="ckeditor-toolbox-search">'
+      +    '<div class="ckeditor-toolbox-groups"></div>'
+  }
+
+  Drupal.theme.ckeditorToolboxGroup = function() {
+    return '<h4 class="ckeditor-toolbox-header"></h4>'
+      +    '<ul class="ckeditor-toolbox-cards"></ul>';
+  }
+
+  Drupal.theme.ckeditorToolboxCard = function(title) {
+    return '<li class="ckeditor-toolbox-cards__card" draggable="true">' + title + '</li>';
   }
 
   /**
@@ -29,4 +33,4 @@
    */
   Drupal.ckeditor_toolbox = {};
 
-})(jQuery, window, Drupal, drupalSettings);
+})(jQuery, Drupal);

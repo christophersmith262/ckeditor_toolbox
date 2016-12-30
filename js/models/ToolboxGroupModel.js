@@ -17,7 +17,7 @@
    *
    * @augments Backbone.Model
    */
-  Drupal.paragraphs_editor.BufferItemModel = Backbone.Model.extend({
+  Drupal.ckeditor_toolbox.ToolboxGroupModel = Backbone.Model.extend({
 
     /**
      * @type {object}
@@ -34,7 +34,19 @@
       "title": '',
     },
 
+    set: function(attributes, options) {
+      if (!this.toolboxItemCollection) {
+        this.toolboxItemCollection = new Drupal.ckeditor_toolbox.ToolboxItemCollection();
+      }
+
+      if (attributes.items) {
+        this.toolboxItemCollection.add(attributes.items, {merge: true});
+        delete attributes.items;
+      }
+
+      return Backbone.Model.prototype.set.call(this, attributes, options);
+    },
+
   });
 
 }(Backbone, Drupal));
-
