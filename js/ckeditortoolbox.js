@@ -15,8 +15,18 @@
   };
 
   Drupal.theme.ckeditorToolbox = function() {
-    return '<input type="text" placeholder="search..." value="" class="ckeditor-toolbox-search">'
-      +    '<div class="ckeditor-toolbox-groups"></div>'
+    return '<div class="ckeditor-toolbox-table">'
+      +      '<a href="#" class="ckeditor-toolbox-table__cell ckeditor-toolbox-table__cell--bar"></a>'
+      +      '<div class="ckeditor-toolbox-table__cell">'
+      +        '<input type="text" placeholder="search..." value="" class="ckeditor-toolbox-search">'
+      +        '<div class="ckeditor-toolbox-groups"></div>'
+      +      '</div>'
+      +    '</div>';
+  }
+
+  Drupal.theme.ckeditorToolboxToggle = function() {
+    return '<span class="ckeditor-toolbox-toggle__icon ckeditor-toolbox-toggle__icon--active"></span>'
+      +    '<span class="ckeditor-toolbox-toggle__text ckeditor-toolbox-toggle__text--active">Toolbox</span>';
   }
 
   Drupal.theme.ckeditorToolboxGroup = function() {

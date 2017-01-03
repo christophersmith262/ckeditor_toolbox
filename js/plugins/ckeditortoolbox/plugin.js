@@ -19,14 +19,17 @@
       editor.on('contentDom', function(evt) {
         var $contents = $(editor.container.$).find('.cke_contents');
         if (!$contents.hasClass('ckeditor-toolbox-processed')) {
-          var toolbox = Drupal.ckeditor_toolbox.manager.attach(editor);
-
-          // Make sure the editable region is at least as tall as the toolbox,
-          // otherwise things will look out of whack.
           var $frame = $contents.find('.cke_wysiwyg_frame');
-          if ($frame.height() < toolbox.view.$el.height()) {
-            $frame.css({ 'min-height': toolbox.view.$el.height() + 'px'});
-          }
+          Drupal.ckeditor_toolbox.manager.attach(editor);
+          editor.plugins.ckeditortoolbox.toolbox.view.resize($frame, $contents);
+        }
+      });
+
+      editor.on('resize', function(evt) {
+        if (editor.plugins.ckeditortoolbox.toolbox) {
+          var $contents = $(editor.container.$).find('.cke_contents');
+          var $frame = $contents.find('.cke_wysiwyg_frame');
+          editor.plugins.ckeditortoolbox.toolbox.view.resize($frame, $contents);
         }
       });
 
@@ -46,8 +49,13 @@
       editor.on('paste', function(evt) {
         var toolboxItemModel = evt.data.dataTransfer.getData('cke/toolbox-item');
         if (toolboxItemModel && editor.plugins.ckeditortoolbox.toolbox) {
-          editor.plugins.ckeditortoolbox.toolbox.insert(toolboxItemModel);
-          evt.data.dataValue = '!insert-component-here!';
+          var markup = editor.plugins.ckeditortoolbox.toolbox.insert(toolboxItemModel);
+          if (markup) {
+            evt.data.dataValue = markup;
+          }
+          else {
+            evt.cancel();
+          }
         }
       });
     }

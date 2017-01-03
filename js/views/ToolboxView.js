@@ -13,6 +13,10 @@
       this._viewFactory = options.viewFactory;
       this._renderedGroups = {};
       this.listenTo(this.collection, 'add remove', this.renderGroups);
+      this.stateModel = new Backbone.Model({
+        'expanded': true,
+      });
+      this.listenTo(this.stateModel, 'change:expanded', this.renderExpanded);
     },
 
     events: {
@@ -28,9 +32,11 @@
         this.$el.addClass('ckeditor-toolbox');
         this.$el.html(this.template());
         this.$groupsEl = this.$el.find('.ckeditor-toolbox-groups');
+        this.toggleView = this._viewFactory.create('toggle', this.stateModel, this.$el.find('a'));
       }
 
       this.renderGroups();
+      this.renderExpanded();
 
       return this;
     },
@@ -60,15 +66,45 @@
       return this;
     },
 
+    renderExpanded: function(stateModel) {
+      if (this.stateModel.get('expanded')) {
+        this.expand();
+      }
+      else {
+        this.collapse();
+      }
+    },
+
+    expand: function() {
+      this.$el.find('div.ckeditor-toolbox-table__cell').show(500);
+    },
+
+    collapse: function() {
+      this.$el.find('div.ckeditor-toolbox-table__cell').hide(500);
+    },
+
     search: function(query) {
       if (!query) {
-        query = this.$el.find('.ckeditor-search-toolbar').attr('value');
+      this.$el.find('div.ckeditor-toolbox-table__cell').animate({'display':'table-cell'}, 1000);
       }
     },
 
     remove: function() {
       this.resetGroups();
+      this.toggleView.remove();
       return Backbone.View.prototype.remove.call(this);
+    },
+
+    resize: function($measure, $target) {
+      var $table = this.$el.find('.ckeditor-toolbox-table');
+      $table.css({'height': ''});
+      if ($measure.height() < $table.height()) {
+        $target.css({ 'height': ($table.height() - 5) + 'px'});
+        this.$el.css({ 'height': ($table.height() - 5) + 'px'});
+      }
+      else if ($table.height() < $measure.height()) {
+        $table.css({ 'height': $target.height() + 'px'});
+      }
     }
 
   });

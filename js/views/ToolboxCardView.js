@@ -13,6 +13,7 @@
       this._viewFactory = options.viewFactory;
       this._dragHandler = options.dragHandler;
       this.listenTo(this.model, 'change:title', this.renderContents);
+      this.listenTo(this.model, 'change:dragging change:dropable', this.renderAttributes);
     },
 
     template: function() {
@@ -41,6 +42,25 @@
 
     renderContents: function() {
       this.$el.html(this.model.get('title'));
+    },
+
+    renderAttributes: function() {
+      var dragging = this.model.get('dragging');
+      var dropable = this.model.get('dropable');
+
+      if (dragging) {
+        this.$el.addClass('ckeditor-toolbox-card__card--dragging');
+      }
+      else {
+        this.$el.removeClass('ckeditor-toolbox-card__card--dragging');
+      }
+
+      if (dragging && dropable) {
+        this.$el.addClass('ckeditor-toolbox-card__card--dropable');
+      }
+      else {
+        this.$el.removeClass('ckeditor-toolbox-card__card--dropable');
+      }
     },
 
     setElement: function(element) {

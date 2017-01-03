@@ -15,9 +15,6 @@
   padding: .25rem;
 }
 
-.ckeditor-toolbox-cards__card.odd {
-}
-
 .ckeditor-toolbox-cards__card:hover {
   background: #fffde3;
   border-left: 5px solid #ccc;
@@ -30,7 +27,7 @@
 
 .ckeditor-toolbox-search {
   margin: .25rem 1rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   padding: .25rem;
 }
 
@@ -42,7 +39,67 @@
 .ckeditor-toolbox {
   background: #f3f3f3;
   display: table-cell;
-  padding-bottom: 1rem;
   resize: horizontal;
   vertical-align: top;
+}
+
+.ckeditor-toolbox-table {
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.ckeditor-toolbox-table__cell {
+  border-left: #e3e3e3;
+}
+
+.ckeditor-toolbox-table__cell--bar {
+  background: #e4e4e4;
+  width: 12px;
+  text-align: center;
+  border-left: 1px solid #ccc;
+}
+
+.ckeditor-toolbox-groups {
+  padding-bottom: 1rem;
+}
+
+.ckeditor-toolbox-toggle__icon {
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 0;
+  border-right: 7px solid #0074bd;
+  display: inline-block;
+  height: 0;
+  width: 0;
+  margin-top: 5px;
+}
+
+.ckeditor-toolbox-toggle__icon--active {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #0074bd;
+  border-right: 0;
+}
+
+.ckeditor-toolbox-toggle {
+  position: relative;
+  width: 20px;
+}
+
+.ckeditor-toolbox-toggle--active {
+  width: 14px;
+}
+
+.ckeditor-toolbox-toggle__text {
+  -webkit-transform: rotate(-90deg);
+  font-size: 16px;
+  position: absolute;
+  left: -23px;
+  top: 44px;
+}
+.ckeditor-toolbox-toggle__text--active {
+  font-size: 11px;
+  left: -16px;
+  top: 32px;
 }

@@ -28,7 +28,15 @@
           items: [
             {
               id: "paragraph:tabs",
+              type: "paragraph",
+              bundle: "tabs",
               title: "Tabs"
+            },
+            {
+              id: "paragraph:sometype",
+              type: "paragraph",
+              bundle: "sometype",
+              title: "User Reference"
             }
           ]
         },
@@ -52,7 +60,7 @@
         },
       ]);
 
-      var dropTargetFinder = new this._prototypes.DropTargetFinder(editor);
+      var dropTargetFinder = new this._prototypes.DropTargetFinder(editor, this._types);
       var dropTargetTracker = new this._prototypes.DropTargetTracker(dropTargetFinder, editor.widgets.locator, editor.widgets.liner);
       var dragHandler = new this._prototypes.DragHandler(editor, dropTargetFinder, dropTargetTracker);
       viewFactory.addOptions({
@@ -60,7 +68,7 @@
       });
       var $contents = $(editor.container.$).find('.cke_contents');
       var view = viewFactory.create('toolbox', toolboxGroupCollection, $contents.addClass('ckeditor-toolbox-processed'));
-      editor.plugins.ckeditortoolbox.toolbox = new this._prototypes.Toolbox(editor, view, dragHandler);
+      editor.plugins.ckeditortoolbox.toolbox = new this._prototypes.Toolbox(editor, this._types, view, dragHandler);
 
       return editor.plugins.ckeditortoolbox.toolbox;
     },
@@ -73,7 +81,7 @@
     },
 
     registerType: function(typeName, definition) {
-      this.types[typeName] = definition;
+      this._types[typeName] = definition;
     }
   });
 

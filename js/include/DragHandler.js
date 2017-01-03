@@ -30,6 +30,7 @@
       // Focus the editor to show the carot and start tracking the drop region.
       this._editor.focus();
       this._dropTargetTracker.startTracking();
+      this._setDragging(true);
 
       this._alterDrag(evt, cardView);
     },
@@ -39,6 +40,7 @@
      */
     stop: function(evt) {
       this._dropTargetTracker.stopTracking();
+      this._setDragging(false);
 
       // We can't always rely on the iframe to generate a drop event, so
       // we manually fire it whenever the user stops dragging.
@@ -56,6 +58,7 @@
      */
     enter: function(evt) {
       this._dropTargetTracker.updateTarget(evt.data.$.clientY);
+      this._updateDropEffect(evt);
     },
 
     /**
@@ -63,6 +66,7 @@
      */
     leave: function(evt) {
       this._dropTargetTracker.reset();
+      this._updateDropEffect(evt);
     },
 
     _initializeDrag: function(evt, cardView) {
@@ -76,6 +80,27 @@
 
     _alterDrag: function(evt, cardView) {
       if (evt.data.dataTransfer.$.setDragImage) {
+      }
+    },
+
+    _updateDropEffect: function(evt) {
+      var dataTransfer = evt.data.$.dataTransfer;
+      if (dataTransfer) {
+        var draggedModel = this._finder.getDraggedModel();
+        if (draggedModel.get('dropable')) {
+          dataTransfer.dropEffect = 'copy';
+        }
+        else {
+          dataTransfer.dropEffect = 'none';
+        }
+      }
+      evt.data.preventDefault();
+    },
+
+    _setDragging: function(yesno) {
+      var draggedModel = this._finder.getDraggedModel();
+      if (draggedModel) {
+        draggedModel.set({dragging: yesno});
       }
     }
 

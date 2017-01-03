@@ -5,6 +5,11 @@
       prototype: Drupal.ckeditor_toolbox.ToolboxView,
       insertType: 'after',
     },
+    'toggle': {
+      dataType: 'model',
+      prototype: Drupal.ckeditor_toolbox.ToolboxToggleView,
+      insertType: 'replace',
+    },
     'group': {
       dataType: 'model',
       prototype: Drupal.ckeditor_toolbox.ToolboxCardGroupView,

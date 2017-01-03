@@ -8,8 +8,9 @@
 
   'use strict';
 
-  Drupal.ckeditor_toolbox.Toolbox = function(editor, toolboxView, dragHandler) {
+  Drupal.ckeditor_toolbox.Toolbox = function(editor, types, toolboxView, dragHandler) {
     this._editor = editor;
+    this._types = types;
     this.view = toolboxView;
     this.dragHandler = dragHandler;
     editor.document.on('dragover', this._dragEnter, this);
@@ -25,6 +26,17 @@
     },
 
     insert: function(toolboxItemModel) {
+      if (toolboxItemModel.get('dropable')) {
+        var type = toolboxItemModel.get('type');
+        if (!this._types[type]) {
+          throw new Error("Inserted type '" + type +  "' has no type handler plugin.");
+        }
+        toolboxItemModel.set({dropable: false});
+        return this._types[type].insert(toolboxItemModel, this._editor);
+      }
+      else {
+        return null;
+      }
     },
 
     _dragEnter: function(evt) {

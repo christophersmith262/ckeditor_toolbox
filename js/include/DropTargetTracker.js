@@ -10,6 +10,7 @@
     this._finder = finder;
     this._locator = locator;
     this._liner = liner;
+    this._isTracking = false;
   }
 
   $.extend(Drupal.ckeditor_toolbox.DropTargetTracker.prototype, {
@@ -21,6 +22,7 @@
 
     startTracking: function() {
       this._targetCandidates = [];
+      this._isTracking = true;
     },
 
     stopTracking: function() {
@@ -28,15 +30,21 @@
         this._targetCandidates = [];
       }
 
+      this._isTracking = false;
       this._liner.hideVisible();
     },
 
     reset: function() {
+      this._setDropable(false);
       this._targetCandidates = [];
       this.stopTracking();
     },
 
     updateTarget: function(y) {
+      if (!this._isTracking) {
+        this.startTracking();
+      }
+
       var resolver = this;
       var relations = this._finder.greedySearch();
 
@@ -44,7 +52,6 @@
       var buffer = CKEDITOR.tools.eventsBuffer(50, function() {
         resolver._processUpdate(y, relations);
       });
-
       buffer.input();
     },
 
@@ -53,6 +60,7 @@
     },
 
     _renderInsertMarker: function(relations) {
+      var hasValidTarget = false;
       try {
         var locations = this._locator.locate(relations);
         var bestCandidate = this._getBestCandidate();
@@ -60,17 +68,26 @@
           this._liner.prepare(relations, locations);
           this._liner.placeLine(bestCandidate);
           this._liner.cleanup();
+          hasValidTarget = true;
         }
       }
       catch (e) {
         this._targetCandidates = [];
       }
+      this._setDropable(hasValidTarget);
     },
 
     _processUpdate: function(y, relations) {
       this._targetCandidates = this._locator.sort(y, 1);
       this._renderInsertMarker(relations);
     },
+
+    _setDropable: function(yesno) {
+      var draggedModel = this._finder.getDraggedModel();
+      if (draggedModel) {
+        draggedModel.set({dropable: yesno});
+      }
+    }
   });
 
 })(jQuery, Drupal, CKEDITOR);

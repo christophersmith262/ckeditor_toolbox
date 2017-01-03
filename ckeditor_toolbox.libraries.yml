@@ -10,11 +10,13 @@ toolbox:
     js/include/DropTargetTracker.js: {}
     js/include/Toolbox.js: {}
     js/include/ToolboxManager.js: {}
+    js/include/ToolboxType.js: {}
     js/include/ViewFactory.js: {}
     js/models/ToolboxGroupModel.js: {}
     js/models/ToolboxItemModel.js: {}
     js/views/ToolboxCardGroupView.js: {}
     js/views/ToolboxCardView.js: {}
+    js/views/ToolboxToggleView.js: {}
     js/views/ToolboxView.js: {}
     js/views/ViewDefinitions.js: {}
     js/collections/ToolboxGroupCollection.js: {}
