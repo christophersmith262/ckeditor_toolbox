@@ -9,6 +9,8 @@
 
   Drupal.ckeditor_toolbox.ToolboxCardView = Backbone.View.extend({
 
+    cardClass: 'ckeditor-toolbox-card__card',
+
     initialize: function(options) {
       this._viewFactory = options.viewFactory;
       this._dragHandler = options.dragHandler;
@@ -21,7 +23,7 @@
     },
 
     render: function() {
-      if (!this.$el.hasClass('ckeditor-toolbox-card__card')) {
+      if (!this.$el.hasClass(this.cardClass)) {
         var $el = $(this.template());
         this.$el.replaceWith($el);
         this.setElement($el[0]);
@@ -49,17 +51,17 @@
       var dropable = this.model.get('dropable');
 
       if (dragging) {
-        this.$el.addClass('ckeditor-toolbox-card__card--dragging');
+        this.$el.addClass(this.cardClass + '--dragging');
       }
       else {
-        this.$el.removeClass('ckeditor-toolbox-card__card--dragging');
+        this.$el.removeClass(this.cardClass + '--dragging');
       }
 
       if (dragging && dropable) {
-        this.$el.addClass('ckeditor-toolbox-card__card--dropable');
+        this.$el.addClass(this.cardClass + '--dropable');
       }
       else {
-        this.$el.removeClass('ckeditor-toolbox-card__card--dropable');
+        this.$el.removeClass(this.cardClass + '--dropable');
       }
     },
 

@@ -6,7 +6,6 @@ toolbox:
   js:
     js/ckeditortoolbox.js: {}
     js/include/DragHandler.js: {}
-    js/include/DropTargetFinder.js: {}
     js/include/DropTargetTracker.js: {}
     js/include/Toolbox.js: {}
     js/include/ToolboxManager.js: {}

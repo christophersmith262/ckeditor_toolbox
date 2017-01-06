@@ -9,6 +9,11 @@
 
   Drupal.ckeditor_toolbox.ToolboxView = Backbone.View.extend({
 
+    containerClass: 'ckeditor-toolbox',
+    groupContainerSelector: '.ckeditor-toolbox-groups',
+    heightTargetSelector: '.ckeditor-toolbox-table',
+    showHideRegionSelector: 'div.ckeditor-toolbox-table__cell',
+
     initialize: function(options) {
       this._viewFactory = options.viewFactory;
       this._renderedGroups = {};
@@ -28,10 +33,10 @@
     },
 
     render: function() {
-      if (!this.$el.hasClass('ckeditor-toolbox')) {
-        this.$el.addClass('ckeditor-toolbox');
+      if (!this.$el.hasClass(this.containerClass)) {
+        this.$el.addClass(this.containerClass);
         this.$el.html(this.template());
-        this.$groupsEl = this.$el.find('.ckeditor-toolbox-groups');
+        this.$groupsEl = this.$el.find(this.groupContainerSelector);
         this.toggleView = this._viewFactory.create('toggle', this.stateModel, this.$el.find('a'));
       }
 
@@ -76,16 +81,15 @@
     },
 
     expand: function() {
-      this.$el.find('div.ckeditor-toolbox-table__cell').show(500);
+      this.$el.find(this.showHideRegionSelector).show(500);
     },
 
     collapse: function() {
-      this.$el.find('div.ckeditor-toolbox-table__cell').hide(500);
+      this.$el.find(this.showHideRegionSelector).hide(500);
     },
 
     search: function(query) {
       if (!query) {
-      this.$el.find('div.ckeditor-toolbox-table__cell').animate({'display':'table-cell'}, 1000);
       }
     },
 
@@ -96,8 +100,9 @@
     },
 
     resize: function($measure, $target) {
-      var $table = this.$el.find('.ckeditor-toolbox-table');
+      var $table = this.$el.find(this.heightTargetSelector);
       $table.css({'height': ''});
+      this.$el.css({'height': ''});
       if ($measure.height() < $table.height()) {
         $target.css({ 'height': ($table.height() - 5) + 'px'});
         this.$el.css({ 'height': ($table.height() - 5) + 'px'});

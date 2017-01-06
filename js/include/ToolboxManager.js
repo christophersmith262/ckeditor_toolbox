@@ -60,9 +60,8 @@
         },
       ]);
 
-      var dropTargetFinder = new this._prototypes.DropTargetFinder(editor, this._types);
-      var dropTargetTracker = new this._prototypes.DropTargetTracker(dropTargetFinder, editor.widgets.locator, editor.widgets.liner);
-      var dragHandler = new this._prototypes.DragHandler(editor, dropTargetFinder, dropTargetTracker);
+      var dropTargetTracker = new this._prototypes.DropTargetTracker(editor.widgets.finder, editor.widgets.locator, editor.widgets.liner);
+      var dragHandler = new this._prototypes.DragHandler(editor, editor.widgets.finder, dropTargetTracker);
       viewFactory.addOptions({
         dragHandler: dragHandler,
       });

@@ -26,6 +26,7 @@
      */
     start: function(evt, cardView) {
       this._initializeDrag(evt, cardView);
+      this._editor.widgetfilter.dragStart(evt);
 
       // Focus the editor to show the carot and start tracking the drop region.
       this._editor.focus();
@@ -41,9 +42,11 @@
     stop: function(evt) {
       this._dropTargetTracker.stopTracking();
       this._setDragging(false);
+      this._editor.widgetfilter.dragEnd(evt);
 
       // We can't always rely on the iframe to generate a drop event, so
       // we manually fire it whenever the user stops dragging.
+      this._editor.focus();
       var dropRange = this._dropTargetTracker.getTargetRange();
       if (dropRange) {
         this._editor.fire('drop', {
@@ -75,7 +78,6 @@
       CKEDITOR.plugins.clipboard.initDragDataTransfer(evt);
       evt.data.dataTransfer.setData('cke/toolbox-item', cardView.model);
       evt.data.dataTransfer.setData('text/html', cardView.$el.text());
-      this._finder.setDraggedModel(cardView.model);
     },
 
     _alterDrag: function(evt, cardView) {
@@ -86,7 +88,7 @@
     _updateDropEffect: function(evt) {
       var dataTransfer = evt.data.$.dataTransfer;
       if (dataTransfer) {
-        var draggedModel = this._finder.getDraggedModel();
+        var draggedModel = this._finder.getDragData().get('toolbox-item');
         if (draggedModel.get('dropable')) {
           dataTransfer.dropEffect = 'copy';
         }
@@ -98,7 +100,7 @@
     },
 
     _setDragging: function(yesno) {
-      var draggedModel = this._finder.getDraggedModel();
+      var draggedModel = this._finder.getDragData().get('toolbox-item');
       if (draggedModel) {
         draggedModel.set({dragging: yesno});
       }

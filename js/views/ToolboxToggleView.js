@@ -9,6 +9,10 @@
 
   Drupal.ckeditor_toolbox.ToolboxToggleView = Backbone.View.extend({
 
+    containerClass: 'ckeditor-toolbox-toggle',
+    iconClass: 'ckeditor-toolbox-toggle__icon',
+    textClass: 'ckeditor-toolbox-toggle__text',
+
     initialize: function(options) {
       this._viewFactory = options.viewFactory;
       this.listenTo(this.model, 'change:expanded', this.render);
@@ -26,22 +30,22 @@
     },
 
     render: function() {
-      if (!this.$el.hasClass('ckeditor-toolbox-toggle')) {
-        this.$el.addClass('ckeditor-toolbox-toggle');
+      if (!this.$el.hasClass(this.containerClass)) {
+        this.$el.addClass(this.containerClass);
         this.$el.html(this.template());
-        this.$iconEl = this.$el.find('.ckeditor-toolbox-toggle__icon');
-        this.$textEl = this.$el.find('.ckeditor-toolbox-toggle__text');
+        this.$iconEl = this.$el.find('.' + this.iconClass);
+        this.$textEl = this.$el.find('.' + this.textClass);
       }
 
       if (this.model.get('expanded')) {
-        this.$el.addClass('ckeditor-toolbox-toggle--active');
-        this.$textEl.addClass('ckeditor-toolbox-toggle__text--active');
-        this.$iconEl.addClass('ckeditor-toolbox-toggle__icon--active');
+        this.$el.addClass(this.containerClass + '--active');
+        this.$iconEl.addClass(this.iconClass + '--active');
+        this.$textEl.addClass(this.textClass + '--active');
       }
       else {
-        this.$el.removeClass('ckeditor-toolbox-toggle--active');
-        this.$textEl.removeClass('ckeditor-toolbox-toggle__text--active');
-        this.$iconEl.removeClass('ckeditor-toolbox-toggle__icon--active');
+        this.$el.removeClass(this.containerClass + '--active');
+        this.$iconEl.removeClass(this.iconClass + '--active');
+        this.$textEl.removeClass(this.textClass + '--active');
       }
 
       return this;

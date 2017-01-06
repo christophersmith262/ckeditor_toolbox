@@ -8,10 +8,27 @@
 
   'use strict';
 
+  Drupal.ckeditor_widgetfilter.Decorators.ToolboxItem = Drupal.ckeditor_widgetfilter.Decorator.extend({
+
+    provides: ['toolbox-item'],
+
+    decorate: function(evt, dragData) {
+      var toolboxItemModel = evt.data.dataTransfer.getData('cke/toolbox-item');
+      if (toolboxItemModel) {
+        dragData.set({'toolbox-item': toolboxItemModel});
+      }
+    },
+  });
+
   CKEDITOR.plugins.add('ckeditortoolbox', {
     icons: null,
     hidpi: false,
+    requires: ["widgetfilter"],
     init: function (editor) {
+
+      editor.widgetfilter.on('init', function(evt) {
+        editor.widgetfilter.registerDecorator(new Drupal.ckeditor_widgetfilter.Decorators.ToolboxItem());
+      });
 
       /**
        * Attach the toolbox when the content dom is ready.

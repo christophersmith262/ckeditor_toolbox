@@ -83,7 +83,7 @@
     },
 
     _setDropable: function(yesno) {
-      var draggedModel = this._finder.getDraggedModel();
+      var draggedModel = this._finder.getDragData().get('toolbox-item');
       if (draggedModel) {
         draggedModel.set({dropable: yesno});
       }
