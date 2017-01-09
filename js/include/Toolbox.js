@@ -14,14 +14,14 @@
     this.view = toolboxView;
     this.dragHandler = dragHandler;
     editor.document.on('dragover', this._dragEnter, this);
-    editor.document.on('dragleave', this._dragLeave, this);
+    editor.container.getDocument().on('dragover', this._dragLeave, this);
   }
 
   $.extend(Drupal.ckeditor_toolbox.Toolbox.prototype, {
 
     destroy: function() {
       this._editor.document.removeListener('dragover', this._dragEnter);
-      this._editor.document.removeListener('dragleave', this._dragLeave);
+      this._editor.container.getDocument().removeListener('dragover', this._dragLeave);
       this.view.remove();
     },
 

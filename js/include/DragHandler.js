@@ -16,7 +16,13 @@
   Drupal.ckeditor_toolbox.DragHandler = function(editor, finder, dropTargetTracker) {
     this._editor = editor;
     this._finder = finder;
+    this._model = null;
     this._dropTargetTracker = dropTargetTracker;
+
+    var dragHandler = this;
+    dropTargetTracker.on('dropable', function(evt) {
+      dragHandler._model.set({dropable: evt.data});
+    });
   }
 
   $.extend(Drupal.ckeditor_toolbox.DragHandler.prototype, {
@@ -26,12 +32,12 @@
      */
     start: function(evt, cardView) {
       this._initializeDrag(evt, cardView);
-      this._editor.widgetfilter.dragStart(evt);
+      this._model = this._editor.widgetfilter.dragStart(evt).get('toolbox-item');
 
       // Focus the editor to show the carot and start tracking the drop region.
       this._editor.focus();
       this._dropTargetTracker.startTracking();
-      this._setDragging(true);
+      this._model.set({dragging: true});
 
       this._alterDrag(evt, cardView);
     },
@@ -41,12 +47,11 @@
      */
     stop: function(evt) {
       this._dropTargetTracker.stopTracking();
-      this._setDragging(false);
+      this._model.set({dragging: false});
       this._editor.widgetfilter.dragEnd(evt);
 
       // We can't always rely on the iframe to generate a drop event, so
       // we manually fire it whenever the user stops dragging.
-      this._editor.focus();
       var dropRange = this._dropTargetTracker.getTargetRange();
       if (dropRange) {
         this._editor.fire('drop', {
@@ -54,6 +59,7 @@
           target: dropRange.startContainer,
         });
       }
+      this._dragData = null;
     },
 
     /**
@@ -88,8 +94,7 @@
     _updateDropEffect: function(evt) {
       var dataTransfer = evt.data.$.dataTransfer;
       if (dataTransfer) {
-        var draggedModel = this._finder.getDragData().get('toolbox-item');
-        if (draggedModel.get('dropable')) {
+        if (this._model.get('dropable')) {
           dataTransfer.dropEffect = 'copy';
         }
         else {
@@ -98,13 +103,6 @@
       }
       evt.data.preventDefault();
     },
-
-    _setDragging: function(yesno) {
-      var draggedModel = this._finder.getDragData().get('toolbox-item');
-      if (draggedModel) {
-        draggedModel.set({dragging: yesno});
-      }
-    }
 
   });
 

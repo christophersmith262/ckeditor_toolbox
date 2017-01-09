@@ -10,6 +10,7 @@
     this._finder = finder;
     this._locator = locator;
     this._liner = liner;
+    this._dragData = null;
     this._isTracking = false;
   }
 
@@ -21,7 +22,21 @@
     },
 
     startTracking: function() {
+      var resolver = this;
+
       this._targetCandidates = [];
+
+      // Handle drag events ~ every 50 ms.
+      var relations = this._finder.greedySearch();
+      this._buffer = CKEDITOR.tools.eventsBuffer(50, function() {
+        if (resolver._isTracking) {
+          resolver._processUpdate(resolver._y, relations);
+        }
+        else {
+          resolver._liner.hideVisible();
+        }
+      });
+
       this._isTracking = true;
     },
 
@@ -31,6 +46,7 @@
       }
 
       this._isTracking = false;
+      this._y = 0;
       this._liner.hideVisible();
     },
 
@@ -44,15 +60,8 @@
       if (!this._isTracking) {
         this.startTracking();
       }
-
-      var resolver = this;
-      var relations = this._finder.greedySearch();
-
-      // Handle drag events ~ every 50 ms.
-      var buffer = CKEDITOR.tools.eventsBuffer(50, function() {
-        resolver._processUpdate(y, relations);
-      });
-      buffer.input();
+      this._y = y;
+      this._buffer.input();
     },
 
     _getBestCandidate: function() {
@@ -83,11 +92,10 @@
     },
 
     _setDropable: function(yesno) {
-      var draggedModel = this._finder.getDragData().get('toolbox-item');
-      if (draggedModel) {
-        draggedModel.set({dropable: yesno});
-      }
+      this.fire('dropable', yesno);
     }
   });
+
+  CKEDITOR.event.implementOn(Drupal.ckeditor_toolbox.DropTargetTracker.prototype);
 
 })(jQuery, Drupal, CKEDITOR);
