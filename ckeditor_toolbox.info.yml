@@ -4,4 +4,4 @@ description: 'A toolbox for drag & drop component insertion.'
 package: Componentize
 core: '8.x'
 dependencies:
-  - ckeditor
+  - ckeditor_widgetfilter
