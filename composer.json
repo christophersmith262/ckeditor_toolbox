@@ -1,0 +1,17 @@
+{
+  "name": "christophersmith262/ckeditor_toolbox",
+  "description": "A toolbox for drag & drop component insertion.",
+  "homepage": "https://github.com/christophersmith262/paragraphs_ckeditor",
+  "authors": [
+    {
+      "name": "Christopher Smith",
+      "homepage": "https://github.com/christophersmith262"
+    }
+  ],
+  "support": {
+  },
+  "license": "GPL-2.0+",
+  "require": {
+    "christophersmith262/ckeditor_widgetfilter": "8.x"
+  }
+}
