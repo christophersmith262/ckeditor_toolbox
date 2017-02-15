@@ -1,6 +1,7 @@
 {
   "name": "christophersmith262/ckeditor_toolbox",
   "description": "A toolbox for drag & drop component insertion.",
+  "type": "drupal-module",
   "homepage": "https://github.com/christophersmith262/paragraphs_ckeditor",
   "authors": [
     {
