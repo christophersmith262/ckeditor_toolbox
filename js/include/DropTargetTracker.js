@@ -69,13 +69,16 @@
     },
 
     _renderInsertMarker: function(relations) {
+      var dropTargetTracker = this;
       var hasValidTarget = false;
       try {
         var locations = this._locator.locate(relations);
         var bestCandidate = this._getBestCandidate();
         if (bestCandidate) {
           this._liner.prepare(relations, locations);
-          this._liner.placeLine(bestCandidate);
+          this._liner.placeLine(bestCandidate, function(line) {
+            dropTargetTracker.fire('line', line);
+          });
           this._liner.cleanup();
           hasValidTarget = true;
         }
