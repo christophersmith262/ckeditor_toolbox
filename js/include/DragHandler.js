@@ -78,6 +78,14 @@
       this._updateDropEffect(evt);
     },
 
+    stay: function(evt) {
+      this._updateDropEffect(evt);
+    },
+
+    getTracker: function() {
+      return this._dropTargetTracker;
+    },
+
     _initializeDrag: function(evt, cardView) {
       // Attach the card model to the event data using the clipboard
       // facade.

@@ -9,19 +9,25 @@
   'use strict';
 
   Drupal.ckeditor_toolbox.Toolbox = function(editor, types, toolboxView, dragHandler) {
+    var toolbox = this;
     this._editor = editor;
     this._types = types;
     this.view = toolboxView;
     this.dragHandler = dragHandler;
+    this._listeners = [];
     editor.document.on('dragover', this._dragEnter, this);
-    editor.container.getDocument().on('dragover', this._dragLeave, this);
+    editor.document.on('dragleave', this._dragLeave, this);
+    dragHandler.getTracker().on('line', function(evt) {
+      var line = evt.data;
+      line.on('dragover', toolbox._drag, toolbox);
+    });
   }
 
   $.extend(Drupal.ckeditor_toolbox.Toolbox.prototype, {
 
     destroy: function() {
       this._editor.document.removeListener('dragover', this._dragEnter);
-      this._editor.container.getDocument().removeListener('dragover', this._dragLeave);
+      this._editor.document.removeListener('dragleave', this._drageLeave);
       this.view.remove();
     },
 
@@ -49,7 +55,13 @@
       if (evt.data.$.dataTransfer.types.includes('cke/toolbox-item')) {
         this.dragHandler.leave(evt);
       }
-    }
+    },
+
+    _drag: function(evt) {
+      if (evt.data.$.dataTransfer.types.includes('cke/toolbox-item')) {
+        this.dragHandler.stay(evt);
+      }
+    },
   });
 
 })(jQuery, Drupal);
